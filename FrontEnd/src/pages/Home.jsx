@@ -5,6 +5,7 @@ import SearchBar from "../Shared/SearchBar";
 
 const Home = () => {
     return <>
+        <Header/>
         <Container>
             <section>
                 <SearchBar/>

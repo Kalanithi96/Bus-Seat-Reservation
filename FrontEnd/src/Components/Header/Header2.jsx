@@ -3,14 +3,14 @@ import { Row} from 'reactstrap'
 import { useNavigate } from "react-router-dom";
 
 import logo from '../../Assets/images/busLogo.jpg'
-import "./Header.css";
+import "./Header2.css";
 
 
-const Header = () => {
+const Header2 = () => {
     const navigate = useNavigate();
 
     const logoButtonHandler = () =>{
-        navigate( "/" )
+        navigate( "/adminHome" )
     }
     return (<div>
         
@@ -24,4 +24,4 @@ const Header = () => {
     </div> );
 };
 
-export default Header;
+export default Header2;

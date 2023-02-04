@@ -1,14 +1,9 @@
 import React from "react";
-
-import Header from './../Header/Header';
-import Routers from '../../router/Router';
-import Footer from './../Footer/Footer';
+import UserType from "../../pages/UserType";
 
 const Layout = () => {
     return <>
-        <Header />
-        <Routers />
-        <Footer />
+        <UserType/>
     </>;
 };
 

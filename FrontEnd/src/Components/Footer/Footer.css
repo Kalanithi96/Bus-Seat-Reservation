@@ -1,0 +1,16 @@
+.footer{
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer .logo p{
+    color: var(--text-color);
+}
+
+.social__links span a{
+    text-decoration: none;
+    color: var(--heading-color);
+    font-size: 1.2rem;
+}
+
