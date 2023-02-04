@@ -1,16 +1,32 @@
 .footer{
-    position: relative;
+    background-color: #333;
+    color: #fff;
+    position: absolute;
     bottom: 0;
     width: 100%;
 }
 
-.footer .logo p{
-    color: var(--text-color);
-}
 
+.footer .logo p{
+    color: #fff;
+}
+.footer-heading{
+    display:  flex;
+    align-items: center;
+    color: #fff;
+}
+.footer-links-container{
+    display:  flex;
+    align-items: center;
+    column-gap: 0.5rem;
+}
 .social__links span a{
     text-decoration: none;
-    color: var(--heading-color);
+    color: #fff;
     font-size: 1.2rem;
 }
 
+.foot{
+    display: flex;
+    justify-content: space-around;
+}

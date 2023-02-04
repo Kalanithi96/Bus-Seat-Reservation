@@ -1,16 +1,16 @@
 import React from "react";
-import {Container} from "reactstrap";
 
 import SearchBar from "../Shared/SearchBar";
+import Header1 from "../Components/Header/Header1";
+import Footer from "../Components/Footer/Footer";
 
 const Home = () => {
     return <>
-        <Header/>
-        <Container>
-            <section>
+        <Header1/>
+            <div className="sbar">
                 <SearchBar/>
-            </section>
-        </Container>
+            </div>
+        <Footer/>
     </>
 };
 

@@ -1,0 +1,27 @@
+.title__bar{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 0.5fr;
+    justify-content: space-around;
+    border: 1px solid black;
+    width: 90%;
+    padding: 1rem 0rem;
+}
+
+.title__bar_container{
+    display: flex;
+    justify-content: center;
+}
+
+.row_bar{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 0.5fr;
+    justify-content: space-around;
+    border: 1px solid black;
+    width: 90%;
+    padding: 1rem 0rem;
+}
+
+.row_container{
+    display: flex;
+    justify-content: center;
+}

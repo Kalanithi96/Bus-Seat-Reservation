@@ -1,12 +1,16 @@
 import React,{useRef} from "react";
+import { useNavigate } from "react-router-dom";
+
 import './Search-bar.css'
-import {Col, Form, FormGroup} from "reactstrap";
+
 
 const SearchBar = () => {
 
     const FromRef = useRef('')
     const ToRef = useRef('')
     const OnRef = useRef('')
+
+    const navigate = useNavigate();
 
     const searchHandler = ()=>{
 
@@ -15,40 +19,48 @@ const SearchBar = () => {
         const on = OnRef.current.value
 
         if(from === '' || to === '' || on ===''){
-            return alert("All Fields are required")
+            return alert("All Fields are required");
         }
+        
+        navigate( "/bus/search" )
     }
 
-    return <Col lg='12'>
+    return (
         <div className="search__bar">
-            <Form>
-                <FormGroup>
-                    <span><i class="ri-map-pin-2-line"></i></span>
+                <div>
+                    <span className="label-container">
+                        <i className="ri-map-pin-2-line"></i>
+                        <h6 className="label">From</h6>
+                    </span>
                     <div>
-                        <h6>From</h6>
-                        <input type="text" placeholder="From" ref={FromRef}/>
+                        <input className = "search-bar-input" type="text" placeholder="From" ref={FromRef}/>
                     </div>
-                </FormGroup>
-                <FormGroup>
-                    <span><i class="ri-map-pin-2-line"></i></span>
+                </div>
+                <div >
+                    <span className="label-container">
+                        <i className="ri-map-pin-2-line"></i>
+                        <h6 className="label">To</h6>
+                    </span>
                     <div>
-                        <h6>To</h6>
-                        <input type="text" placeholder="To" ref={ToRef}/>
+                        <input className = "search-bar-input" type="text" placeholder="To" ref={ToRef}/>
                     </div>
-                </FormGroup>
-                <FormGroup>
-                    <span><i class="ri-calendar-line"></i></span>
+                </div>
+                <div >
+                    <span className="label-container">
+                        <i className="ri-calendar-line"></i>
+                        <h6 className="label">On</h6>
+                    </span>
                     <div>
-                        <h6>On</h6>
-                        <input type="datetime-local" placeholder="On" ref={OnRef}/>
+                        <input className = "search-bar-input" type="date" placeholder="On" ref={OnRef}/>
                     </div>
-                </FormGroup>
+                </div>
                 <span className="search__icon" type="submit" onClick={searchHandler}>
-                    <i class="ri-search-line"></i>
+                    <i className="ri-search-line"></i>
                 </span>
-            </Form>
         </div>
-    </Col>
+    );
+        
+            
 };
 
 export default SearchBar;

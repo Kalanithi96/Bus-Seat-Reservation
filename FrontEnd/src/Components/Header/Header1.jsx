@@ -1,5 +1,4 @@
 import React from "react";
-import { Row} from 'reactstrap'
 import { useNavigate } from "react-router-dom";
 
 import logo from '../../Assets/images/busLogo.jpg'
@@ -14,12 +13,14 @@ const Header1 = () => {
     }
     return (<div>
         
-        <header className="header">
-                <Row>
-                    <div className="logo">
-                            <img src={logo} alt="" onClick={logoButtonHandler}/>
-                    </div>
-                </Row>
+        <header className="header1">
+            <span className="logo1">
+                <img src={logo} alt="" onClick={logoButtonHandler}/>
+            </span>
+            <span className="icon1">
+                <i className="ri-user-line"></i>
+                <span> UserName</span>
+            </span>
         </header>
     </div> );
 };

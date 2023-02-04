@@ -1,0 +1,23 @@
+.big_container{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.ind_pass{
+    display: flex;
+    flex-direction: column;
+}
+
+.ind_pas_upper{
+    display: flex;
+    flex-direction: column;
+}
+
+.ind_pas_lower{
+    display: flex;
+}
+
+.contact_container{
+    display: flex;
+    flex-direction: column;
+}
