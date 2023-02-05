@@ -10,7 +10,7 @@ import CustomerRegister from './pages/CustomerRegister';
 import Home from './pages/Home';
 import PassengerDetails from './pages/PassengerDetails';
 import SearchResults from './pages/SearchResults';
-import UserType from './pages/UserType';
+import UserType from './pages/userTypes/userTypes.component';
 
 function App() {
   return (
