@@ -26,8 +26,11 @@
   align-items: center;
   flex-direction: column;
   padding: 2rem;
-  margin-top: 1rem;
+  margin-top: 4rem;
   z-index: 1;
+  background-color: whitesmoke;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
 }
 
 .user-type-button {
@@ -40,9 +43,15 @@
   font-weight: 600;
   font: 1rem poppins;
   cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.1);
   color: #333;
+  transition: color 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
 
+.user-type-button:hover {
+  background-color: #333;
+  color: #fff;
+}
 .background-sheet {
   display: flex;
   position: absolute;
@@ -51,5 +60,5 @@
   left: 0;
   right: 0;
   background-image: url("../../Assets/images/bus-background.jpg");
-  opacity: 0.5;
+  opacity: 0.7;
 }

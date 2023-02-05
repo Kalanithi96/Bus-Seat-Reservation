@@ -1,6 +1,6 @@
 import React from "react";
 
-import SearchBar from "../Shared/SearchBar";
+import SearchBar from "../Components/SearchBar/SearchBar";
 import Header1 from "../Components/Header/Header1";
 import Footer from "../Components/Footer/Footer";
 
