@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import Header1 from "../Components/Header/Header1";
-import Footer from "../Components/Footer/Footer";
-import "./SearchResults/SearchResults.css";
+import Header1 from "../../Components/Header/Header1";
+import Footer from "../../Components/Footer/Footer";
+import "./SearchResults.css";
 
 const SearchResults = () => {
     

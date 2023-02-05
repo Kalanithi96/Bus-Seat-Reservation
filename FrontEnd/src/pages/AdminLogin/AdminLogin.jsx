@@ -1,15 +1,13 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 
-import Header from "../Components/Header/Header";
-const CustomerLogin = () => {
+import { useNavigate } from "react-router-dom";
+import Header from "../../Components/Header/Header";
+
+const AdminLogin = () => {
     const navigate = useNavigate();
 
-    const adminButtonHandler = () =>{
-        navigate( "/adminLogin" )
-    }
-    const custRegButtonHandler = () =>{
-        navigate( "/customerRegister" )
+    const customerButtonHandler = () =>{
+        navigate( "/customerLogin" )
     }
 
     return (
@@ -23,11 +21,10 @@ const CustomerLogin = () => {
                 </form>
             </div>
             <div>
-                <button onClick={adminButtonHandler}>Admin?</button>
-                <button onClick={custRegButtonHandler}>Register for New user</button>
+                <button onClick={customerButtonHandler}>Cutomer?</button>
             </div>
         </div>
     );
 };
 
-export default CustomerLogin;
+export default AdminLogin;

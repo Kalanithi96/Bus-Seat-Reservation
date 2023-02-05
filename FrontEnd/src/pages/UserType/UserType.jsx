@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import Header from "./../Components/Header/Header";
+import Header from "../../Components/Header/Header";
 
 const UserType = () => {
     const navigate = useNavigate();

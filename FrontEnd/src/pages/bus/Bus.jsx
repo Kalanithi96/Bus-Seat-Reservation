@@ -1,14 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import Header1 from "../Components/Header/Header1";
-import Footer from "../Components/Footer/Footer";
-import "./bus/bus.css";
+import Header1 from "../../Components/Header/Header1";
+import Footer from "../../Components/Footer/Footer";
+import "./bus.css";
 
 const Bus = () => {
     const navigate = useNavigate();
 
     const previewButtonHandler = () =>{
-        navigate( "/passengerDetails" )
+        navigate( "/ticketPreview" )
     }
 
     return (

@@ -9,7 +9,10 @@ const Header1 = () => {
     const navigate = useNavigate();
 
     const logoButtonHandler = () =>{
-        navigate( "/home" )
+        navigate( "/CustomerHome" )
+    }
+    const userButtonHandler = () =>{
+        navigate( "/bookings" )
     }
     return (<div>
         
@@ -17,7 +20,7 @@ const Header1 = () => {
             <span className="logo1">
                 <img src={logo} alt="" onClick={logoButtonHandler}/>
             </span>
-            <span className="icon1">
+            <span className="icon1" onClick={userButtonHandler}>
                 <i className="ri-user-line"></i>
                 <span> UserName</span>
             </span>

@@ -1,15 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import Header from "../Components/Header/Header";
-const CustomerRegister = () => {
+import Header from "../../Components/Header/Header";
+const CustomerLogin = () => {
     const navigate = useNavigate();
 
     const adminButtonHandler = () =>{
         navigate( "/adminLogin" )
     }
-    const customerButtonHandler = () =>{
-        navigate( "/customerLogin" )
+    const custRegButtonHandler = () =>{
+        navigate( "/customerRegister" )
     }
 
     return (
@@ -18,17 +18,16 @@ const CustomerRegister = () => {
             <div>
                 <form>
                     <input type="text" placeholder="Username"></input>
-                    <input type="number" placeholder="Phone Number"></input>
                     <input type="password" placeholder="Password"></input>
                     <button type="submit">Submit</button>
                 </form>
             </div>
             <div>
                 <button onClick={adminButtonHandler}>Admin?</button>
-                <button onClick={customerButtonHandler}>Existing user?</button>
+                <button onClick={custRegButtonHandler}>Register for New user</button>
             </div>
         </div>
     );
 };
 
-export default CustomerRegister;
+export default CustomerLogin;
