@@ -1,8 +1,10 @@
 import React from "react";
-import { useState } from "react";
+import { useState,useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { AuthContext } from "../../Context/authContext";
 import Header from "../../Components/Header/Header";
+import {BASE_URL} from '../../Hooks/config';
+
 const CustomerRegister = () => {
     const navigate = useNavigate();
 
@@ -13,42 +15,52 @@ const CustomerRegister = () => {
         navigate( "/customerLogin" )
     }
 
-    const [username,setUsername] = useState('')
-    const [phone,setPhone] = useState(0)
-    const [password,setPassword] = useState('')
+    const [credentials, setCredentials] = useState({
+        username: undefined,
+        phone: undefined,
+        password: undefined
+    })
 
-    async function submit(e){
+    const {dispatch} = useContext(AuthContext)
 
-        e.preventDefault()
+    const handleChange = e => {
+        setCredentials(prev => ({...prev, [e.target.id]:e.target.value }));
+    }
 
-        let x = await fetch('http://localhost:4000/api/v1/auth/register', {
-            method:'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username,
-                password,
-                phone
+    const handleClick = async e=>{
+        e.preventDefault();
+
+        try{
+            const res = await fetch(`${BASE_URL}/auth/register`, {
+                method:'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(credentials)
             })
-        })
 
-        if(x.status === 200)
-            navigate(`/customerLogin`)
-        else if(x.status === 404)
-            alert("Addition failed");
-    };
+            const result = await res.json();
 
+            if(!res.ok) alert(result.message)
+            else{
+                dispatch({type:'REGISTER_SUCCESS'})
+                navigate('/customerlogin');
+            }
+        } catch(err){
+            alert(err.message);
+        }
+
+    }
 
     return (
         <div>
             <Header/>
             <div>
-            <form onSubmit={submit}>
-                    <input type="text" onChange={(e)=>{setUsername(e.target.value)}} placeholder="Username"></input>
-                    <input type="number" onChange={(e)=>{setPhone(e.target.value)}} placeholder="Phone Number"></input>
-                    <input type="password" onChange={(e)=>{setPassword(e.target.value)}} placeholder="Password"></input>
-                    <button type="submit">Submit</button>
+            <form>
+                    <input type="text" onChange={handleChange} required placeholder="Username" id="username"></input>
+                    <input type="number" onChange={handleChange} required placeholder="Phone Number" id="phone"></input>
+                    <input type="password" onChange={handleChange} required placeholder="Password" id="password"></input>
+                    <button type="submit" onClick={handleClick}>Submit</button>
                 </form>
             </div>
             <div>

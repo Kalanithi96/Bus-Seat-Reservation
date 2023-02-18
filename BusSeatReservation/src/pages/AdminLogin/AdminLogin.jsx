@@ -2,6 +2,9 @@ import React from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../../Components/Header/Header";
+import { useContext } from "react";
+import { AuthContext } from "../../Context/authContext";
+import { BASE_URL } from "../../Hooks/config.js";
 
 const AdminLogin = () => {
     const navigate = useNavigate();
@@ -10,51 +13,54 @@ const AdminLogin = () => {
         navigate( "/customerLogin" )
     }
 
-    const [username,setUsername] = useState('')
-    const [password,setPassword] = useState('')
+    const [credentials, setCredentials] = useState({
+        username: undefined,
+        password: undefined
+    })
 
-    async function submit(e){
+    const {dispatch} = useContext(AuthContext)
 
-        e.preventDefault()
+    const handleChange = e => {
+        setCredentials(prev => ({...prev, [e.target.id]:e.target.value }));
+    }
 
-        let x = await fetch('http://localhost:4000/api/v1/auth/adminLogin', {
-            method:'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username,
-                password
+    const handleClick = async e=>{
+        e.preventDefault();
+
+        dispatch({type:'LOGIN_START'})
+
+        try{
+            const res = await fetch(`${BASE_URL}/auth/adminLogin`, {
+                method:'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials:'include',
+                body: JSON.stringify(credentials)
             })
-        })
-
-        if(x.status === 200){
-            const res = await fetch(`http://localhost:4000/api/v1/buses`,{method:"GET"})
- 
-            if(!res.ok)
-                alert("Something went wrong");
 
             const result = await res.json();
 
-            navigate('/adminHome',{state:result.data})
+            if(!res.ok) alert(result.message)
+            else{
+                dispatch({type:'LOGIN_SUCCESS', payload:result.data})
+                navigate('/adminHome');
+            }
+        } catch(err){
+            dispatch({type:'LOGIN_FAILURE', payload:err.message})
+            alert(err.message);
         }
-        else if(x.status === 404)
-            alert("User not found");
-        else if(x.status === 500)
-            alert("Check credentials");
-        else
-            alert("Unmatching Username/Password");
-    };
+    }
 
 
     return (
         <div>
             <Header/>
             <div>
-            <form onSubmit={submit}>
-                    <input type="text" onChange={(e)=>{setUsername(e.target.value)}} placeholder="Username"></input>
-                    <input type="password" onChange={(e)=>{setPassword(e.target.value)}} placeholder="Password"></input>
-                    <button type="submit">Submit</button>
+                <form>
+                    <input type="text" onChange={handleChange} required placeholder="Username" id="username"></input>
+                    <input type="password" onChange={handleChange} required placeholder="Password" id="password"></input>
+                    <button type="submit" onClick={handleClick}>Submit</button>
                 </form>
             </div>
             <div>

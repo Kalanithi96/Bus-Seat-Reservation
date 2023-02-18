@@ -11,14 +11,6 @@ const AdminHome = () => {
     const addBusButtonHandler = () =>{
         navigate( "/addBus" )
     }
-    
-    const updateBusButtonHandler = () =>{
-        navigate( "/updateBus" )
-    }
-
-    const viewBusButtonHandler = () =>{
-        navigate( "/adminBus" )
-    }
 
     return (
         <div>

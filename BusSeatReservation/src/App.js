@@ -22,7 +22,7 @@ function App() {
         <Route path='/customerHome' element={<CustomerHome/>}/>
         <Route path='/adminHome' element={<AdminHome/>}/>
         <Route path='/bookings' element={<Bookings/>}/>
-        <Route path='/bus' element={<Bus/>}/>
+        <Route path='/bus/:id' element={<Bus/>}/>
         <Route path='/' element={<UserType/>}/>
         <Route path='/adminLogin' element={<AdminLogin/>}/>
         <Route path='/customerLogin' element={<CustomerLogin/>}/>
@@ -32,7 +32,7 @@ function App() {
         <Route path='/bookings/ticket' element={<Ticket/>}/>    
         <Route path='/adminBus' element={<AdminBus/>}/>
         <Route path='/addBus' element={<AddBus/>}/>
-        <Route path='/updateBus' element={<UpdateBus/>}/>
+        <Route path='/updateBus/:id' element={<UpdateBus/>}/>
     </Routes>
 );
 }

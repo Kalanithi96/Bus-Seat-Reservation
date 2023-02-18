@@ -1,18 +1,38 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import useFetch from "../../Hooks/useFetch";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { Link } from "react-router-dom";
+import {BASE_URL} from "../../Hooks/config"
 
 function AdminBusTable(){
-    const location = useLocation();
 
-    const [Tabledata] = useState(location.state)
+    const navigate = useNavigate();
 
-    function busButtonHandler(){
-        console.log("hell")
+    const {data: TableData, loading, error} = useFetch(`${BASE_URL}/buses`)
+
+    async function busButtonHandler(event, data){
+        
+        let id = data
+        try{
+            const res = await fetch(`${BASE_URL}/buses/${id}`,{
+                method:'DELETE',
+            })
+
+            const result = await res.json();
+
+            if(!res.ok) alert(result.message)
+            else{
+                location.reload();
+            }
+        } catch(err){
+            alert(err.message);
+        }
     }
 
-    if(Tabledata.length === 0)
+    if(loading)
+        return <div>Loading...</div>
+
+    if(TableData.length === 0)
         return <div>No matching bus</div>;
 
     else{
@@ -33,7 +53,7 @@ function AdminBusTable(){
         
         const tdData =() =>{
         
-            return Tabledata.map((data)=>{
+            return TableData.map((data)=>{
             return(
                 <tr id = {data['id']}>
                         <td key="busNo">{data['busNo']}</td>
@@ -47,17 +67,21 @@ function AdminBusTable(){
                         </td>
                         <td key="seats">{data['seats']}</td>
                         <td key="view">
-                            <button value={data['id']} onClick={busButtonHandler}>
-                                <i className="ri-book-line"></i>
-                            </button>
+                            <Link to={`/adminBus/${data['_id']}`}>
+                                <button>
+                                    <i className="ri-book-line"></i>
+                                </button>
+                            </Link>
                         </td>
                         <td key="update">
-                            <button value={data['id']} onClick={busButtonHandler}>
-                                <i className="ri-book-line"></i>
-                            </button>
+                            <Link to={`/updateBus/${data['_id']}`}>
+                                <button>
+                                    <i className="ri-book-line"></i>
+                                </button>
+                            </Link>
                         </td>
                         <td key="delete">
-                            <button value={data['id']} onClick={busButtonHandler}>
+                            <button value={data['_id']}  onClick={ event=>busButtonHandler(event,data['_id']) }>
                                 <i className="ri-book-line"></i>
                             </button>
                         </td>

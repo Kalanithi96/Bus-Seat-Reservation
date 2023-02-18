@@ -2,6 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function DynamicTable(){
     const navigate = useNavigate();
@@ -9,10 +10,6 @@ function DynamicTable(){
     const location = useLocation();
 
     const [Tabledata] = useState(location.state)
-
-    function busButtonHandler(){
-        console.log("hell")
-    }
 
     if(Tabledata.length === 0)
         return <div>No matching bus</div>;
@@ -47,9 +44,11 @@ function DynamicTable(){
                         </td>
                         <td key="seats">{data['seats']}</td>
                         <td key="book">
-                            <button value={data['id']} onClick="busButtonHandler(this)">
-                                <i className="ri-book-line"></i>
-                            </button>
+                            <Link to={`/bus/${data['_id']}`}>
+                                <button>
+                                    <i className="ri-book-line"></i>
+                                </button>
+                            </Link>
                         </td>
                 </tr>
             )

@@ -1,109 +1,123 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
+import useFetch from "../../Hooks/useFetch"
 import Header2 from "../../Components/Header/Header2";
 import Footer from "../../Components/Footer/Footer";
+import { BASE_URL } from "../../Hooks/config";
 
 const UpdateBus = () => {
     const navigate = useNavigate();
+
+    const id = useParams();
 
     const adminHomeButtonHandler = () =>{
         navigate( "/adminHome" )
     }
 
-    const [busNo,setBusNo] = useState('')
-    const [from,setFrom] = useState('')
-    const [to,setTo] = useState('')
-    const [arrival,setArrival] = useState('')
-    const [departure,setDeparture] = useState('')
-    const [seats,setSeats] = useState(0)
+    const {data: bus, loading, error} = useFetch(`${BASE_URL}/buses/${id.id}`)
 
-    async function submit(e){
+    const [details, setDetails] = useState({
+        busNo: bus['busNo'],
+        from: bus['from'],
+        departure: bus['departure'],
+        to: bus['to'],
+        arrival: bus['arrival'],
+        seats: bus['seats']
+    })
 
-        e.preventDefault()
+    const handleChange = e => {
+        setDetails(prev => ({...prev, [e.target.id]:e.target.value }));
+    }
 
-        let x = await fetch(`http://localhost:4000/api/v1/buses/`, {
-            method:'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                busNo,
-                from,
-                departure,
-                to,
-                arrival,
-                seats
+    const handleClick = async e=>{
+        e.preventDefault();
+
+        try{
+            const res = await fetch(`${BASE_URL}/buses/${id.id}`, {
+                method:'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(details)
             })
-        })
-
-
-        if(x.status === 200){
-            const res = await fetch(`http://localhost:4000/api/v1/buses`,{method:"GET"})
-    
-            if(!res.ok)
-                alert("Something went wrong");
 
             const result = await res.json();
 
-            navigate('/adminHome',{state:result.data})
+            if(!res.ok) alert(result.message)
+            else{
+                navigate('/adminHome');
+            }
+        } catch(err){
+            alert(err.message);
         }
-        else
-            alert("Unmatching Username/Password");
-    };
 
-    return (
-        <div>
-            <Header2/>
-            <form onSubmit={submit}>
-                <div>
-                    <span>Bus Number</span>
-                    <span>
-                        <input type="text" placeholder="Bus Number" onChange={(e)=>{setBusNo(e.target.value)}}></input>
-                    </span>
-                </div>
-                <div>
-                    <span>From Location</span>
-                    <span>
-                        <input type="text" placeholder="From Location" onChange={(e)=>{setFrom(e.target.value)}}/>
-                    </span>
-                </div>
-                <div>
-                    <span>Departure Timing</span>
-                    <span>
-                        <input type="datetime-local" placeholder="Departure Timing" onChange={(e)=>{setDeparture(e.target.value)}}/>
-                    </span>
-                </div>
-                <div>
-                    <span>To Location</span>
-                    <span>
-                        <input type="text" placeholder="To Location" onChange={(e)=>{setTo(e.target.value)}}/>
-                    </span>
-                </div>
-                <div>
-                    <span>Arrival Timing</span>
-                    <span>
-                        <input type="datetime-local" placeholder="Arrival Timing" onChange={(e)=>{setArrival(e.target.value)}}/>
-                    </span>
-                </div>
-                <div>
-                    <span>Seats</span>
-                    <span>
-                        <input type="number" placeholder="No of seats" onChange={(e)=>{setSeats(e.target.value)}}/>
-                    </span>
-                </div>
-                <div>
-                    <span>
-                        <button onClick={adminHomeButtonHandler}>Return to Home Page</button>    
-                    </span>
-                    <span>
-                        <button type="submit">Add Bus</button>
-                    </span>
-                </div>
-            </form>
-            <Footer/>
-        </div>
-    );
+    }
+
+    if(loading)
+        return <div>Loading...</div>
+
+    else{
+        console.log(details)
+        return (
+            <div>
+                <Header2/>
+                <form>
+                    <div>
+                        <span>Bus Number</span>
+                        <span>
+                            <input type="text" placeholder={details['busNo']} id="busNo" required onChange={handleChange} ></input>
+                        </span>
+                        <span>{bus['busNo']}</span>
+                    </div>
+                    <div>
+                        <span>From Location</span>
+                        <span>
+                            <input type="text" placeholder={details['from']} id="from" required onChange={handleChange} />
+                        </span>
+                        <span>{bus['from']}</span>
+                    </div>
+                    <div>
+                        <span>Departure Timing</span>
+                        <span>
+                            <input type="datetime-local" placeholder="Departure Timing" id="departure" required onChange={handleChange} />
+                        </span>
+                        <span>{bus['departure']}</span>
+                    </div>
+                    <div>
+                        <span>To Location</span>
+                        <span>
+                            <input type="text" placeholder={details['to']} id="to" required onChange={handleChange} />
+                        </span>
+                        <span>{bus['to']}</span>
+                    </div>
+                    <div>
+                        <span>Arrival Timing</span>
+                        <span>
+                            <input type="datetime-local" placeholder="Arrival Timing" id="arrival" required onChange={handleChange} />
+                        </span>
+                        <span>{bus['arrival']}</span>
+                    </div>
+                    <div>
+                        <span>Seats</span>
+                        <span>
+                            <input type="number"  placeholder={details['seats']} id="seats" required onChange={handleChange} />
+                        </span>
+                        <span>{bus['seats']}</span>
+                    </div>
+                    <div>
+                        <span>
+                            <button onClick={adminHomeButtonHandler}>Return to Home Page</button>    
+                        </span>
+                        <span>
+                            <button type="submit" onClick={handleClick}>Update Bus</button>
+                        </span>
+                    </div>
+                </form>
+                <Footer/>
+            </div>
+        );
+    }
 };
 
 export default UpdateBus;
