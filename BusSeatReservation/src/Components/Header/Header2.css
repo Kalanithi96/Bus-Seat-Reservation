@@ -1,0 +1,17 @@
+.header2{
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+}
+
+.logo2 img{
+    width: 100px;
+    border-radius: 50%;
+}
+
+.icon2{
+    display: flex;
+    align-items: center;
+    column-gap: 0.7rem;
+    margin-right: 2rem;
+}
