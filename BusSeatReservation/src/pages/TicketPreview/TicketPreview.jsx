@@ -1,14 +1,50 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
+import useFetch from "../../Hooks/useFetch";
+import { BASE_URL } from "../../Hooks/config";
 import Header1 from "../../Components/Header/Header1";
 import Footer from "../../Components/Footer/Footer";
+import StripeCheckOut from "react-stripe-checkout";
+import axios from "axios";
 
 const PassengerDetails = () => {
     const navigate = useNavigate();
 
-    const busButtonHandler = () =>{
-        navigate( "/bus" )
+    const head = useParams();
+    const location = useLocation();
+
+    const {data: bus, loading, error} = useFetch(`${BASE_URL}/buses/${head.id}`)
+
+    let pass = location.state.pass;
+    let contact = location.state.contact;
+    let fill = location.state.fill;
+
+    const passengerButtonHandler = () =>{
+        navigate( `/passenger/${head.id}`, {state:fill} )
     }
+
+    const publishableKey="pk_test_51MdY41SHtFjqIyhtA6iF4VzoJWeLAP1KTNx68m5XYah4owP7jmsXHFJjfn8GD8AItPXFnxku0IHKf9MJIEvj9NjW00qZIXuHUn";
+
+    const payNow = async token => {
+        try{
+            const response = await axios({
+                url:"http://localhost:4000/payment",
+                method:"POST",
+                data:{
+                    amount: bus['fare'] * pass.length * 100,
+                    token
+                }
+            })
+            if(response.status == 200){
+                console.log("Your payment was successful");
+                
+                navigate('/customerHome')
+            }
+        }catch(error){
+            console.log(error);
+        }
+    };
+
     return (
         <div>
             <Header1/>
@@ -18,10 +54,10 @@ const PassengerDetails = () => {
                 </div>
                 <div>
                     <span>
-                        From: Coimbatore 1200hrs
+                        From: {bus['from']} {bus['departure']}
                     </span>
                     <span>
-                        To: Chennai 2300hrs
+                        To: {bus['to']} {bus['arrival']}
                     </span>
                 </div>
                 <div>
@@ -29,10 +65,10 @@ const PassengerDetails = () => {
                 </div>
                 <div>
                     <span>
-                        Phone: 9876543210
+                        Phone: {contact.phone}
                     </span>
                     <span>
-                        Email: abc@cde.com
+                        Email: {contact.email}
                     </span>
                 </div>
             </div>
@@ -44,34 +80,40 @@ const PassengerDetails = () => {
                     <td>Fare</td>
                 </tr>
          
-                <tr>
-                    <td>Ahesh</td>
-                    <td>22</td>
-                    <td>Male</td>
-                    <td>Rs.13</td>
-                </tr>
-
-                <tr>
-                    <td>Kallaam</td>
-                    <td>22</td>
-                    <td>Male</td>
-                    <td>Rs.10</td>
-                </tr>
+                {
+                    pass.map((ind)=>(
+                        <tr>
+                            <td>{ind.name}</td>
+                            <td>{ind.age}</td>
+                            <td>{ind.gender}</td>
+                            <td>{bus['fare']}</td>
+                        </tr>
+                    ))
+                }
             </table>
             <div>
                 <span>
                     Tax: Rs. 0
                 </span>
                 <span>
-                    Total Fare: Rs. 23
+                    Total Fare: Rs. {bus['fare'] * pass.length}
                 </span>
             </div>
             <div>
                 <span>
-                    <button onClick={busButtonHandler}>Return to Seats Page</button>
+                    <button onClick={passengerButtonHandler}>Return to Passenger Page</button>
                 </span>
                 <span>
-                    <button>Proceed to Pay</button>
+                    <StripeCheckOut
+                        stripeKey={publishableKey}
+                        lable="Proceed to Pay"
+                        name="Pay with Credit Card"
+                        billingAddress
+                        shippingAddress
+                        amount={bus['fare'] * pass.length * 100}
+                        description={`Total fare is Rs.${bus['fare'] * pass.length}`}
+                        token={payNow}
+                    />
                 </span>
             </div>
             <Footer/>

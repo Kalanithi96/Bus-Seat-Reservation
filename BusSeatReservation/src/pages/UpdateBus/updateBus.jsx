@@ -23,7 +23,8 @@ const UpdateBus = () => {
         departure: bus['departure'],
         to: bus['to'],
         arrival: bus['arrival'],
-        seats: bus['seats']
+        totalSeats: bus['totalSeats'],
+        fare: bus['fare']
     })
 
     const handleChange = e => {
@@ -99,11 +100,18 @@ const UpdateBus = () => {
                         <span>{bus['arrival']}</span>
                     </div>
                     <div>
-                        <span>Seats</span>
+                        <span>Total Seats</span>
                         <span>
-                            <input type="number"  placeholder={details['seats']} id="seats" required onChange={handleChange} />
+                            <input type="number"  placeholder={details['totalSeats']} id="totalSeats" required onChange={handleChange} />
                         </span>
-                        <span>{bus['seats']}</span>
+                        <span>{bus['totalSeats']}</span>
+                    </div>
+                    <div>
+                        <span>Fare</span>
+                        <span>
+                            <input type="number"  placeholder={details['fare']} id="fare" required onChange={handleChange} />
+                        </span>
+                        <span>{bus['fare']}</span>
                     </div>
                     <div>
                         <span>

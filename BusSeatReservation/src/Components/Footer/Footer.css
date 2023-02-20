@@ -1,7 +1,7 @@
 .footer{
     background-color: #333;
     color: #fff;
-    position: absolute;
+    position:inherit;
     bottom: 0;
     width: 100%;
 }

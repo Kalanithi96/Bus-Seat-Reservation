@@ -1,5 +1,6 @@
 import React,{useRef} from "react";
 import { useNavigate } from "react-router-dom";
+import {BASE_URL} from "../Hooks/config";
 import './Search-bar.css'
 
 
@@ -21,18 +22,18 @@ const SearchBar = () => {
             return alert("All fields are required");
         }
 
-        const res = await fetch(`http://localhost:4000/api/v1/buses/search/getBusBySearch?from=${from}&to=${to}&on=${on}`,{method:"GET"})
+        const res = await fetch(`${BASE_URL}/buses/search/getBusBySearch?from=${from}&to=${to}&on=${on}`,{method:"GET"})
  
         if(!res.ok)
             alert("Something went wrong");
 
         const result = await res.json();
 
-        navigate( `/bus/search?from=${from}&to=${to}&on=${on}`, {state:result.data})
+        navigate(`/bus/search?from=${from}&to=${to}&on=${on}`, {state:result.data})
     }
 
     return (
-        <div className="search__bar">
+            <div className="search__bar">
                 <div>
                     <span className="label-container">
                         <i className="ri-map-pin-2-line"></i>
@@ -63,7 +64,7 @@ const SearchBar = () => {
                 <span className="search__icon" type="submit" onClick={searchHandler}>
                     <i className="ri-search-line"></i>
                 </span>
-        </div>
+            </div>
     );
         
             

@@ -23,6 +23,7 @@ function DynamicTable(){
                 <th key="from">From</th>
                 <th key="to">To</th>
                 <th key="seats">Available Seats</th>
+                <th key="fare">Fare</th>
                 <th key="book">Book</th>
                 </>
             )
@@ -42,7 +43,8 @@ function DynamicTable(){
                             <div>{data['to']}</div>
                             <div>{data['arrival']}</div>
                         </td>
-                        <td key="seats">{data['seats']}</td>
+                        <td key="availableSeats">{data['availableSeats']}</td>
+                        <td key="fare">{data['fare']}</td>
                         <td key="book">
                             <Link to={`/bus/${data['_id']}`}>
                                 <button>

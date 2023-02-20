@@ -18,7 +18,10 @@ const AddBus = () => {
         departure: undefined,
         to: undefined,
         arrival: undefined,
-        seats: 0
+        totalSeats: 0,
+        availableSeats: 0,
+        fare: 0,
+        vacant: undefined
     })
 
     const handleChange = e => {
@@ -27,7 +30,14 @@ const AddBus = () => {
 
     const handleClick = async e=>{
         e.preventDefault();
-
+        details['availableSeats'] = details['totalSeats']
+        details['vacant'] = {'A1':true,'A2':true,'A3':true,
+                             'B1':true,'B2':true,'B3':true,
+                             'C1':true,'C2':true,'C3':true,
+                             'D1':true,'D2':true,'D3':true,
+                             'E1':true,'E2':true,'E3':true,
+                             'F1':true,'F2':true,'F3':true,
+                             'G1':true,'G2':true,'G3':true};
         try{
             const res = await fetch(`${BASE_URL}/buses`, {
                 method:'POST',
@@ -86,7 +96,13 @@ const AddBus = () => {
                 <div>
                     <span>Seats</span>
                     <span>
-                        <input type="number" placeholder="No of seats" id="seats" required onChange={handleChange} />
+                        <input type="number" placeholder="No of seats" id="totalSeats" required onChange={handleChange} />
+                    </span>
+                </div>
+                <div>
+                    <span>Fare</span>
+                    <span>
+                        <input type="number" placeholder="Fare" id="fare" required onChange={handleChange} />
                     </span>
                 </div>
                 <div>

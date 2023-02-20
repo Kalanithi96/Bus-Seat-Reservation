@@ -29,6 +29,22 @@ export const updateBus = async (req,res) => {
 
 }
 
+export const updateBusAfterBooking = async (req,res) => {
+
+    const id = req.params.id
+
+    try{
+        const updatedBus = await Bus.findByIdAndUpdate(id,{
+            $set: req.body
+        }, {new:true})
+
+        res.status(200).json({success:true, message:"successfully updated",data:updatedBus})
+    }catch(err){
+        res.status(500).json({success:false, message:"updation failed"})
+    }
+
+}
+
 export const deleteBus = async (req,res) => {
 
     const id = req.params.id

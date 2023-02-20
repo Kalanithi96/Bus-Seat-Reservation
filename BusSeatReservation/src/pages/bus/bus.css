@@ -1,39 +1,10 @@
-.big_container{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-}
 
-.ind_pass{
-    display: flex;
-    flex-direction: column;
-    padding: 20px 0;
-}
-
-.ind_pas_upper{
-    display: flex;
-    flex-direction: column;
-}
-
-.ind_pas_lower{
-    display: flex;
-}
-
-.contact_container{
-    display: flex;
-    flex-direction: column;
-}
-
+/*
 .bus_container{
     padding:50px;
 }
 
-.bus{
-    border: 2px solid black;
-    padding:10px;
-    width:130px;
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-}
+
 
 .left button, .right button{
     width:25px;
@@ -44,4 +15,27 @@
 
 .left{
     padding-right:12px;
+}
+*/
+.select__item--selected{
+    background-color: rgb(0, 90, 90);
+    color: white;
+}
+
+.bus{
+    border: 2px solid black;
+    padding:10px;
+    width:130px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+}
+
+.custom-select{
+    display: none;
+}
+
+.cannot_select{
+    background-color: red;
+    color: white;
 }

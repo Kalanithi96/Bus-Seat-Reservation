@@ -43,7 +43,9 @@ function AdminBusTable(){
                 <th key="busNo">Bus Number</th>
                 <th key="from">From</th>
                 <th key="to">To</th>
-                <th key="seats">Available Seats</th>
+                <th key="totalSeats">Total Seats</th>
+                <th key="availableSeats">Available Seats</th>
+                <th key="fare">Fare</th>
                 <th key="view">View</th>
                 <th key="update">Update</th>
                 <th key="delete">Delete</th>
@@ -65,7 +67,9 @@ function AdminBusTable(){
                             <div>{data['to']}</div>
                             <div>{data['arrival']}</div>
                         </td>
-                        <td key="seats">{data['seats']}</td>
+                        <td key="totalSeats">{data['totalSeats']}</td>
+                        <td key="availableSeats">{data['availableSeats']}</td>
+                        <td key="fare">{data['fare']}</td>
                         <td key="view">
                             <Link to={`/adminBus/${data['_id']}`}>
                                 <button>

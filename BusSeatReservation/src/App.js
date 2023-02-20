@@ -15,8 +15,10 @@ import Ticket from './pages/ticket/ticket';
 import AdminBus from './pages/AdminBus/AdminBus';
 import AddBus from './pages/AddBus/addBus';
 import UpdateBus from './pages/UpdateBus/updateBus';
+import Passenger from './pages/Passenger/passenger';
 
 function App() {
+
   return (
     <Routes>
         <Route path='/customerHome' element={<CustomerHome/>}/>
@@ -27,12 +29,13 @@ function App() {
         <Route path='/adminLogin' element={<AdminLogin/>}/>
         <Route path='/customerLogin' element={<CustomerLogin/>}/>
         <Route path='/customerRegister' element={<CustomerRegister/>}/>
-        <Route path='/ticketPreview' element={<TicketPreview/>}/>
+        <Route path='/ticketPreview/:id' element={<TicketPreview/>}/>
         <Route path='/bus/search' element={<SearchResults/>}/> 
         <Route path='/bookings/ticket' element={<Ticket/>}/>    
         <Route path='/adminBus' element={<AdminBus/>}/>
         <Route path='/addBus' element={<AddBus/>}/>
         <Route path='/updateBus/:id' element={<UpdateBus/>}/>
+        <Route path='/passenger/:id' element={<Passenger/>}/>
     </Routes>
 );
 }

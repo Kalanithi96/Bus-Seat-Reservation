@@ -1,4 +1,3 @@
-import { Timestamp } from "mongodb";
 import mongoose from "mongoose";
 
 const busSchema = new mongoose.Schema(
@@ -24,10 +23,22 @@ const busSchema = new mongoose.Schema(
             type:Date,
             required: true,
         },
-        seats:{
+        totalSeats:{
             type:Number,
             required: true,
         },
+        availableSeats:{
+            type:Number,
+            required: true,
+        },
+        fare:{
+            type:Number,
+            required: true
+        },
+        vacant:{
+            type:Object,
+            required: true
+        }
     },
     {timestamps: true}
 );
