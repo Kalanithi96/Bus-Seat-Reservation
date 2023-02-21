@@ -101,14 +101,18 @@ const Passenger = () => {
                                                     Gender
                                                 </div>
                                                 <div>
-                                                    <input 
-                                                        type="text" 
+                                                    <select 
+                                                        required
                                                         name="gender"
-                                                        required 
-                                                        placeholder="Gender" 
-                                                        value={input.gender}
                                                         onChange={event => handleFormChange(index, event)}
-                                                    />
+                                                    >
+                                                        <option value="">Choose a Gender</option>
+                                                        <option value="M">Male</option>
+                                                        <option value="F">Female</option>
+                                                        <option value="T">Transgender</option>
+                                                        <option value="O">Other</option>
+                                                    </select>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
