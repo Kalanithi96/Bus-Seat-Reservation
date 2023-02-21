@@ -33,17 +33,96 @@ export const updateBusAfterBooking = async (req,res) => {
 
     const id = req.params.id
 
+    let oldBus
+    try{
+        const old = await Bus.findById(id)        
+        oldBus = old
+    }catch(err){
+        console.log(err)
+    }
+
+    let fill = req.body.fill;
+
+    fill.map((seat)=>{
+        oldBus['vacant'][seat] = false
+    });
+    oldBus['availableSeats'] = oldBus['availableSeats'] - fill.length;
+
     try{
         const updatedBus = await Bus.findByIdAndUpdate(id,{
-            $set: req.body
+            $set: oldBus
         }, {new:true})
 
         res.status(200).json({success:true, message:"successfully updated",data:updatedBus})
     }catch(err){
         res.status(500).json({success:false, message:"updation failed"})
     }
+    
 
 }
+
+export const updateBusAfterCancel = async (req,res) => {
+
+    const id = req.params.id
+
+    let oldBus
+    try{
+        const old = await Bus.findById(id)        
+        oldBus = old
+    }catch(err){
+        console.log(err)
+    }
+
+    let fill = req.body.fill;
+
+    oldBus['vacant'][fill] = true
+    oldBus['availableSeats'] = oldBus['availableSeats'] + 1;
+
+    try{
+        const updatedBus = await Bus.findByIdAndUpdate(id,{
+            $set: oldBus
+        }, {new:true})
+
+        res.status(200).json({success:true, message:"successfully updated",data:updatedBus})
+    }catch(err){
+        res.status(500).json({success:false, message:"updation failed"})
+    }
+    
+
+}
+
+export const updateBusAfterReset = async (req,res) => {
+
+    const id = req.params.id
+
+    let oldBus
+    try{
+        const old = await Bus.findById(id)        
+        oldBus = old
+    }catch(err){
+        console.log(err)
+    }
+
+    let fill = req.body.fill;
+
+    fill.map((seat)=>{
+        oldBus['vacant'][seat] = true
+    });
+    oldBus['availableSeats'] = oldBus['availableSeats'] + fill.length;
+
+    try{
+        const updatedBus = await Bus.findByIdAndUpdate(id,{
+            $set: oldBus
+        }, {new:true})
+
+        res.status(200).json({success:true, message:"successfully updated",data:updatedBus})
+    }catch(err){
+        res.status(500).json({success:false, message:"updation failed"})
+    }
+    
+
+}
+
 
 export const deleteBus = async (req,res) => {
 

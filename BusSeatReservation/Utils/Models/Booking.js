@@ -1,13 +1,14 @@
+import { ObjectId } from "mongodb";
 import mongoose from "mongoose";
 
 const bookingSchema = new mongoose.Schema(
     {
         bus_id:{
-            type:String,
+            type:ObjectId,
             required: true,
         },
         user_id:{
-            type:String,
+            type:ObjectId,
             required: true,
         },
         phone:{

@@ -23,7 +23,7 @@ function App() {
     <Routes>
         <Route path='/customerHome' element={<CustomerHome/>}/>
         <Route path='/adminHome' element={<AdminHome/>}/>
-        <Route path='/bookings' element={<Bookings/>}/>
+        <Route path='/bookings/:id' element={<Bookings/>}/>
         <Route path='/bus/:id' element={<Bus/>}/>
         <Route path='/' element={<UserType/>}/>
         <Route path='/adminLogin' element={<AdminLogin/>}/>
@@ -31,7 +31,7 @@ function App() {
         <Route path='/customerRegister' element={<CustomerRegister/>}/>
         <Route path='/ticketPreview/:id' element={<TicketPreview/>}/>
         <Route path='/bus/search' element={<SearchResults/>}/> 
-        <Route path='/bookings/ticket' element={<Ticket/>}/>    
+        <Route path='/bookings/ticket/:id' element={<Ticket/>}/>    
         <Route path='/adminBus' element={<AdminBus/>}/>
         <Route path='/addBus' element={<AddBus/>}/>
         <Route path='/updateBus/:id' element={<UpdateBus/>}/>

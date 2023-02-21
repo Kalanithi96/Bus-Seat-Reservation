@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb'
 import Booking from '../Models/Booking.js'
 
 export const createBooking = async (req,res) => {
@@ -31,9 +32,16 @@ export const deleteBooking = async (req,res) => {
 export const viewBookingBuses = async (req,res) => {
 
     try{
-        const booking = await Booking.aggregate([{$group:{'_id':'$bus_id'}}])
+        const bookings = await Booking.aggregate([  {$group:{'_id':'$bus_id','count':{$sum:1}}},
+                                                    {$lookup:{
+                                                        from:"buses",
+                                                        localField:"_id",
+                                                        foreignField:"_id",
+                                                        as: "bus_details"
+                                                    }}
+                                                ]);
 
-        res.status(200).json({success:true, message:"successfully retrieved",data:booking})
+        res.status(200).json({success:true, message:"successfully retrieved",data:bookings})
     }catch(err){
         res.status(404).json({success:false, message:"retrieval failed"})
     }
@@ -43,9 +51,10 @@ export const viewBookingBuses = async (req,res) => {
 export const viewBookingPassengers = async (req,res) => {
 
     const id = req.params.id
+    const u_id = req.body.u_id;
 
     try{
-        const booking = await Booking.find({'bus_id':id})
+        const booking = await Booking.find({'bus_id':id,'user_id':u_id})
 
         res.status(200).json({success:true, message:"successfully retrieved",data:booking})
     }catch(err){
@@ -57,11 +66,19 @@ export const viewBookingPassengers = async (req,res) => {
 
 export const viewAllBookings = async (req,res) => {
 
-    const id = req.params.id
-    console.log(id)
-
+    
+    const id = new ObjectId(req.params.id)
+    
     try{
-        const bookings = await Booking.find({'user_id':id})
+        const bookings = await Booking.aggregate([  {$match:{user_id:id}},
+                                                    {$group:{'_id':'$bus_id','count':{$sum:1}}},
+                                                    {$lookup:{
+                                                        from:"buses",
+                                                        localField:"_id",
+                                                        foreignField:"_id",
+                                                        as: "bus_details"
+                                                    }}
+                                                ]);
 
         res.status(200).json({success:true, message:"successfully retrieved",data:bookings})
     }catch(err){

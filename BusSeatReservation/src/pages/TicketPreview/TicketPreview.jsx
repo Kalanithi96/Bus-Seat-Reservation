@@ -1,5 +1,7 @@
 import React from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../../Context/authContext";
 import useFetch from "../../Hooks/useFetch";
 import { BASE_URL } from "../../Hooks/config";
 import Header1 from "../../Components/Header/Header1";
@@ -13,6 +15,10 @@ const PassengerDetails = () => {
     const head = useParams();
     const location = useLocation();
 
+    const {user, dispatch} = useContext(AuthContext)
+    const {data: userData, uloading, uerror} = useFetch(`${BASE_URL}/users/${user.username}`)
+    const id=userData['_id']
+
     const {data: bus, loading, error} = useFetch(`${BASE_URL}/buses/${head.id}`)
 
     let pass = location.state.pass;
@@ -25,6 +31,61 @@ const PassengerDetails = () => {
 
     const publishableKey="pk_test_51MdY41SHtFjqIyhtA6iF4VzoJWeLAP1KTNx68m5XYah4owP7jmsXHFJjfn8GD8AItPXFnxku0IHKf9MJIEvj9NjW00qZIXuHUn";
 
+    const createBooking = async ()=>{
+            try{
+                pass.map(async(record)=>{
+
+                    const resp = await fetch(`${BASE_URL}/booking/`,{
+                        method:"POST",
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body:JSON.stringify({
+                            bus_id: head.id,
+                            user_id: id,
+                            phone: contact.phone,
+                            email:contact.email,
+                            name:record.name,
+                            age:record.age,
+                            gender:record.gender,
+                            seat:record.seatNumber
+                        })
+                    })
+                    if(resp.status == 200){
+                        console.log(record.seatNumber+" added");
+                    }
+
+                })
+                
+            }catch(err){
+                console.log(err);
+            }
+    }
+
+    const updateBus = async ()=>{
+            try{
+                const res = await fetch(`${BASE_URL}/buses//bus/${head.id}`,{
+                    method:"PUT",
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body:JSON.stringify({
+                        fill:fill
+                    })
+                })
+ 
+                if(!res.ok)
+                    alert("Something went wrong");
+
+                const result = await res.json();
+                console.log("Update was successful");
+                console.log(result.data)
+                
+            }catch(err){
+                console.log(err);
+            }
+    }
+
     const payNow = async token => {
         try{
             const response = await axios({
@@ -36,9 +97,9 @@ const PassengerDetails = () => {
                 }
             })
             if(response.status == 200){
-                console.log("Your payment was successful");
-                
-                navigate('/customerHome')
+                updateBus();
+                createBooking();
+                navigate('/customerHome');
             }
         }catch(error){
             console.log(error);

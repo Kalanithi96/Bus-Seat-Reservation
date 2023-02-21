@@ -7,7 +7,7 @@ const bookingRouter = express.Router()
 bookingRouter.post('/', createBooking);
 bookingRouter.delete('/:id', deleteBooking);
 bookingRouter.get('/', viewBookingBuses);
-bookingRouter.get('/bus/:id', viewBookingPassengers);
+bookingRouter.post('/bus/:id', viewBookingPassengers);
 bookingRouter.get('/user/:id', viewAllBookings);
 
 export default bookingRouter;

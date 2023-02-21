@@ -6,6 +6,6 @@ import { verifyUser } from '../verifyToken.js';
 const userRouter = express.Router()
 
 userRouter.post('/', createUser);
-userRouter.get('/:id' , viewUser);
+userRouter.get('/:userName' , viewUser);
 
 export default userRouter;

@@ -15,10 +15,10 @@ export const createUser = async (req,res) => {
 
 export const viewUser = async (req,res) => {
 
-    const id = req.params.id
+    const name = req.params.userName
 
     try{
-        const user = await User.findById(id);
+        const user = await User.findOne({"username":name});
 
         res.status(200).json({success:true, message:"successfully retrieved",data:user})
     }catch(err){
