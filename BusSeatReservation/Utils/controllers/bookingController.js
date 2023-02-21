@@ -63,6 +63,35 @@ export const viewBookingPassengers = async (req,res) => {
 
 }
 
+export const viewBookingPassenger = async (req,res) => {
+
+    const id = req.params.id
+    const seat = req.body.seat;
+
+    try{
+        const booking = await Booking.findOne({'bus_id':id,'seat':seat})
+
+        res.status(200).json({success:true, message:"successfully retrieved",data:booking})
+    }catch(err){
+        res.status(404).json({success:false, message:"retrieval failed"})
+    }
+
+}
+
+export const viewIndividualBusBookings = async (req,res) => {
+
+    const id = req.params.id
+
+    try{
+        const booking = await Booking.find({'bus_id':id})
+
+        res.status(200).json({success:true, message:"successfully retrieved",data:booking})
+    }catch(err){
+        res.status(404).json({success:false, message:"retrieval failed"})
+    }
+
+}
+
 
 export const viewAllBookings = async (req,res) => {
 

@@ -32,7 +32,7 @@ function App() {
         <Route path='/ticketPreview/:id' element={<TicketPreview/>}/>
         <Route path='/bus/search' element={<SearchResults/>}/> 
         <Route path='/bookings/ticket/:id' element={<Ticket/>}/>    
-        <Route path='/adminBus' element={<AdminBus/>}/>
+        <Route path='/adminBus/:id' element={<AdminBus/>}/>
         <Route path='/addBus' element={<AddBus/>}/>
         <Route path='/updateBus/:id' element={<UpdateBus/>}/>
         <Route path='/passenger/:id' element={<Passenger/>}/>
