@@ -26,3 +26,17 @@ export const viewUser = async (req,res) => {
     }
 
 }
+
+export const viewUserByID = async (req,res) => {
+
+    const id = req.params.id
+
+    try{
+        const user = await User.findById(id);
+
+        res.status(200).json({success:true, message:"successfully retrieved",data:user})
+    }catch(err){
+        res.status(404).json({success:false, message:"retrieval failed"})
+    }
+
+}

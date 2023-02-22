@@ -18,6 +18,7 @@ const AdminBus = () => {
     let [fill, setFill] = useState("")
     let [seat, setSeat] = useState("")
     let [passenger, setPassenger] = useState(null)
+    let [user, setUser] = useState(null)
 
     const emptyButtonHandler = () =>{
         document.querySelectorAll('.select_item').forEach(element=>{
@@ -143,6 +144,8 @@ const AdminBus = () => {
     }
 
     async function getPassenger(){
+        let userId
+
         try{
             const res = await fetch(`${BASE_URL}/booking/passenger/${head.id}`, {
                 method:'POST',
@@ -159,6 +162,25 @@ const AdminBus = () => {
             if(!res.ok) alert(result.message)
             else{
                 setPassenger(result.data)
+                userId = result.data.user_id
+            }
+        } catch(err){
+            alert(err.message);
+        }
+
+        try{
+            const res = await fetch(`${BASE_URL}/users/id/${userId}`, {
+                method:'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            })
+
+            const result = await res.json();
+
+            if(!res.ok) alert(result.message)
+            else{
+                setUser(result.data)
                 console.log(result.data)
             }
         } catch(err){
@@ -185,9 +207,12 @@ const AdminBus = () => {
 
     const passengerData = () =>{
 
-        if(seat!="" && passenger != undefined)
+        if(seat!="" && passenger != null && user != null)
             return (
                     <div>
+                        <div>
+                            User Name: {user.username}
+                        </div>
                         <div>
                             Passenger Name: {passenger.name}
                         </div>
